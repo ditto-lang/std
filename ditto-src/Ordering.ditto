@@ -1,0 +1,88 @@
+module Ordering exports (
+    Ordering(..),
+    reverse,
+    or,
+    is_less_than,
+    is_less_than_or_eq,
+    is_eq,
+    is_not_eq,
+    is_greater_than_or_eq,
+    is_greater_than,
+);
+
+
+-- The result of comparing two values.
+type Ordering =
+    | LT
+    | EQ
+    | GT;
+
+-- Reversing an ordering "flips" it.
+--
+-- ```
+-- reverse(LT) == GT
+-- reverse(EQ) == EQ
+-- reverse(GT) == LT
+-- ````
+reverse = fn (ordering: Ordering): Ordering ->
+    match ordering with
+    | LT -> GT
+    | EQ -> EQ
+    | GT -> LT
+    end;
+
+-- Returns the first argument if it's _not_ `EQ`, otherwise returns the second argument.
+-- Useful for _combining_ comparisons.
+--
+-- ```
+-- or(LT, GT) == GT
+-- or(EQ, GT) == GT
+-- or(GT, LT) == GT
+-- ```
+or = fn (lhs: Ordering, rhs: Ordering): Ordering ->
+    match lhs with
+    | EQ -> rhs
+    | _ -> lhs
+    end;
+
+is_less_than = fn (ordering: Ordering) ->
+    match ordering with
+    | LT -> true
+    | EQ -> false
+    | GT -> false
+    end;
+
+is_less_than_or_eq = fn (ordering: Ordering) ->
+    match ordering with
+    | LT -> true
+    | EQ -> true
+    | GT -> false
+    end;
+
+is_eq = fn (ordering: Ordering) ->
+    match ordering with
+    | LT -> false
+    | EQ -> true
+    | GT -> false
+    end;
+
+is_not_eq = fn (ordering: Ordering) ->
+    match ordering with
+    | LT -> true
+    | EQ -> false
+    | GT -> true
+    end;
+
+is_greater_than_or_eq = fn (ordering: Ordering) ->
+    match ordering with
+    | LT -> false
+    | EQ -> true
+    | GT -> true
+    end;
+
+is_greater_than = fn (ordering: Ordering) ->
+    match ordering with
+    | LT -> false
+    | EQ -> false
+    | GT -> true
+    end;

@@ -1,0 +1,66 @@
+module Pair.Tests exports (
+    tests,
+);
+
+import Bool;
+import Int;
+import Pair (
+    Pair(..),
+);
+import Test (
+    Test,
+);
+
+
+tests: Array(Test) = [
+    Test.pure(
+        "Pair: first",
+        Test.assert(Int.is_eq(Pair.first(Pair(1, unit)), 1)),
+    ),
+    Test.pure(
+        "Pair: second",
+        Test.assert(Int.is_eq(Pair.second(Pair(unit, 1)), 1)),
+    ),
+    Test.pure(
+        "Pair: swap",
+        assert_is_eq(Pair.swap(Pair(1, 2)), Pair(2, 1), Int.is_eq, Int.is_eq),
+    ),
+    Test.pure(
+        "Pair: map first",
+        assert_is_eq(
+            Pair.map_first(Pair(1, 2), add_one),
+            Pair(2, 2),
+            Int.is_eq,
+            Int.is_eq,
+        ),
+    ),
+    Test.pure(
+        "Pair: map second",
+        assert_is_eq(
+            Pair.map_second(Pair(2, 1), add_one),
+            Pair(2, 2),
+            Int.is_eq,
+            Int.is_eq,
+        ),
+    ),
+    Test.pure(
+        "Pair: map both",
+        assert_is_eq(
+            Pair.map_both(Pair(100, 200), add_one, add_one),
+            Pair(101, 201),
+            Int.is_eq,
+            Int.is_eq,
+        ),
+    ),
+];
+
+add_one = fn (i) -> Int.add(i, 1);
+
+assert_is_eq = fn (x, y, is_eq_first, is_eq_second): Test.Result -> Test.assert(
+    pair_is_eq(x, y, is_eq_first, is_eq_second),
+);
+
+pair_is_eq = fn (Pair(a, b), Pair(c, d), is_eq_first, is_eq_second) -> Bool.and(
+    is_eq_first(a, c),
+    is_eq_second(b, d),
+);

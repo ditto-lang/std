@@ -1,0 +1,166 @@
+module Int.Tests exports (
+    tests,
+);
+
+import Bool;
+import Float;
+import Fuzz;
+import Int;
+import Result;
+import String;
+import Test (
+    Test,
+);
+
+
+tests: Array(Test) = [
+    Fuzz.test(
+        "Int: less than",
+        Fuzz.int_bounded({ min = 0, max = 100 }),
+        fn (int) -> Int.is_less_than(int, 200),
+    ),
+    Fuzz.test(
+        "Int: less than or equal",
+        Fuzz.int,
+        fn (int) -> Int.is_less_than_or_eq(int, int),
+    ),
+    Fuzz.test("Int: is equal", Fuzz.int, fn (int) -> Int.is_eq(int, int)),
+    Fuzz.test(
+        "Int: is not equal",
+        Fuzz.int_bounded({ min = 50, max = 100000 }),
+        fn (int) -> Bool.and(
+            Int.is_not_eq(int, 10),
+            -- make sure these are equivalent
+            Bool.not(Int.is_eq(int, 10)),
+        ),
+    ),
+    Fuzz.test(
+        "Int: is greater than",
+        Fuzz.int_bounded({ min = 1000, max = 10000 }),
+        fn (int) -> Int.is_greater_than(int, 50),
+    ),
+    Fuzz.test(
+        "Int: is greater than or equal",
+        Fuzz.int,
+        fn (int) -> Int.is_greater_than_or_eq(int, int),
+    ),
+    Test.pure(
+        "Int: add",
+        Test.assert(
+            Int.add(10, 20)
+            |> Int.is_eq(30),
+        ),
+    ),
+    Test.pure(
+        "Int: subtract",
+        Test.assert(
+            Int.subtract(20, 10)
+            |> Int.is_eq(10),
+        ),
+    ),
+    Test.pure(
+        "Int: divide",
+        Test.assert(
+            Int.divide(10, 2)
+            |> Float.is_eq(5.0, { tolerance = 0.0 }),
+        ),
+    ),
+    Test.pure(
+        "Int: divide by 0",
+        Test.assert(
+            Int.divide(10, 0)
+            |> Float.is_eq(0.0, { tolerance = 0.0 }),
+        ),
+    ),
+    Test.pure(
+        "Int: multiply",
+        Test.assert(
+            Int.multiply(10, 20)
+            |> Int.is_eq(200),
+        ),
+    ),
+    Test.pure(
+        "Int: remainder",
+        Test.assert(
+            Int.remainder(10, 3)
+            |> Int.is_eq(1),
+        ),
+    ),
+    Test.pure(
+        "Int: remainder 0",
+        Test.assert(
+            Int.remainder(10, 0)
+            |> Int.is_eq(0),
+        ),
+    ),
+    Test.pure(
+        "Int: remainder negative dividend",
+        Test.assert(
+            Int.remainder(Int.negate(10), 3)
+            |> Int.is_eq(Int.negate(1)),
+        ),
+    ),
+    Test.pure(
+        "Int: modulo",
+        Test.assert(
+            Int.modulo(10, 3)
+            |> Int.is_eq(1),
+        ),
+    ),
+    Test.pure(
+        "Int: modulo 0",
+        Test.assert(
+            Int.modulo(10, 0)
+            |> Int.is_eq(0),
+        ),
+    ),
+    Test.pure(
+        "Int: modulo negative dividend",
+        Test.assert(
+            Int.modulo(Int.negate(10), 3)
+            |> Int.is_eq(2),
+        ),
+    ),
+    Test.pure(
+        "Int: to string",
+        Test.assert(
+            Int.to_string(123)
+            |> String.is_eq("123"),
+        ),
+    ),
+    Test.pure(
+        "Int: to string with underscores",
+        Test.assert(
+            Int.to_string(1_23)
+            |> String.is_eq("123"),
+        ),
+    ),
+    Fuzz.test(
+        "Int: negate",
+        Fuzz.int_bounded({ min = 1, max = 100000 }),
+        fn (int) ->
+            Int.negate(int)
+            |> Int.is_less_than(0),
+    ),
+    Test.pure(
+        "Int: negate zero",
+        if Int.is_not_eq(Int.negate(0), 0) then
+            Result.Err("negate(0) /= 0")
+        else
+            Result.Ok(unit),
+    ),
+    Test.pure(
+        "Int: min",
+        Test.assert(
+            Int.min(100, 500)
+            |> Int.is_eq(100),
+        ),
+    ),
+    Test.pure(
+        "Int: max",
+        Test.assert(
+            Int.max(100, 500)
+            |> Int.is_eq(500),
+        ),
+    ),
+];

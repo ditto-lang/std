@@ -1,0 +1,65 @@
+module Test exports (
+    Test,
+    Args,
+    Result,
+    test,
+    pure,
+    run_tests,
+    assert,
+    assert_with,
+);
+
+import Array;
+import Bool;
+import Effect (
+    VoidEffect,
+);
+import Result;
+
+
+type Test = Test((Args) -> Effect(Bool));
+
+type alias Args = {
+    log_success: ({ description: String }) -> VoidEffect,
+    log_error: ({ description: String, error: String }) -> VoidEffect,
+};
+
+type alias Result = Result.Result(Unit, String);
+
+test = fn (description: String, test_case: Effect(Result)): Test -> Test(
+    fn (args) -> do {
+        result <- try_catch(test_case, Result.Err);
+        match result with
+        | Result.Ok(_) -> do {
+            args.log_success({ description = description });
+            return true
+        }
+        | Result.Err(error) -> do {
+            args.log_error({ description = description, error = error });
+            return false
+        }
+        end
+    },
+);
+
+pure = fn (description: String, result: Result): Test -> test(
+    description,
+    Effect.pure(result),
+);
+
+assert = fn (condition: Bool): Result -> assert_with(
+    condition,
+    "assertion failed",
+);
+
+assert_with = fn (condition: Bool, message: String): Result ->
+    if condition then Result.Ok(unit) else Result.Err(message);
+
+type alias Tests = Array(Test);
+
+run_tests = fn (args: Args, tests: Tests): Effect(Bool) -> do {
+    results <- Effect.for_each(tests, fn (Test(f)) -> f(args));
+    return Array.foldl(results, true, Bool.and)
+};
+
+foreign try_catch: (Effect(Result), (String) -> Result) -> Effect(Result);

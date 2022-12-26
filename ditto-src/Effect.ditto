@@ -1,0 +1,53 @@
+module Effect exports (
+    VoidEffect,
+    pure,
+    noop,
+    void,
+    map,
+    when,
+    unless,
+    for_each,
+    sequence,
+);
+
+import Array;
+
+
+type alias VoidEffect = Effect(Unit);
+
+-- Lift a pure value into an `Effect`.
+pure = fn (a: a): Effect(a) -> do {
+    return a
+};
+
+-- Does nothing.
+noop: VoidEffect = do {
+    return unit
+};
+
+-- Discard the result of an `Effect`.
+void = fn (effect: Effect(a)): VoidEffect -> map(effect, fn (_) -> unit);
+
+map = fn (effect: Effect(a), f: (a) -> b): Effect(b) -> do {
+    a <- effect;
+    return f(a)
+};
+
+-- Run a `VoidEffect` if some condition is `true`.
+when = fn (condition: Bool, effect: VoidEffect): VoidEffect ->
+    if condition then effect else noop;
+
+-- Run a `VoidEffect` if some condition is `false`.
+unless = fn (condition: Bool, effect: VoidEffect): VoidEffect ->
+    if condition then noop else effect;
+
+-- Run an `Effect` for each element of an array. A bit like a `for` loop.
+for_each = fn (effects: Array(a), f: (a) -> Effect(b)): Effect(Array(b)) ->
+    effects
+    |> Array.map(f)
+    |> sequence;
+
+-- Run a bunch of effects, collecting the results.
+sequence = sequence_impl;
+
+foreign sequence_impl: (Array(Effect(a))) -> Effect(Array(a));

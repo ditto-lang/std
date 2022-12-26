@@ -1,0 +1,23 @@
+module Bool exports (
+    and,
+    or,
+    xor,
+    not,
+);
+
+
+and = and_impl;
+
+or = or_impl;
+
+xor = xor_impl;
+
+not = not_impl;
+
+foreign and_impl: (Bool, Bool) -> Bool;
+
+foreign or_impl: (Bool, Bool) -> Bool;
+
+foreign xor_impl: (Bool, Bool) -> Bool;
+
+foreign not_impl: (Bool) -> Bool;

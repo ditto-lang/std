@@ -1,0 +1,65 @@
+module Effect.Tests exports (
+    tests,
+);
+
+import Effect;
+import Int;
+import Result (
+    Result(..),
+);
+import String;
+import Test (
+    Test,
+);
+
+
+tests: Array(Test) = [
+    test_is_eq(
+        "Effect: pure",
+        Effect.pure("hello"),
+        Effect.pure("hello"),
+        String.is_eq,
+    ),
+    Test.test(
+        "Effect: noop",
+        Effect.noop
+        |> Effect.map(Ok),
+    ),
+    Test.test(
+        "Effect: void",
+        Effect.pure("hello")
+        |> Effect.void
+        |> Effect.map(Ok),
+    ),
+    test_is_eq(
+        "Effect: map",
+        Effect.pure(2)
+        |> Effect.map(fn (x) -> Int.add(x, 2)),
+        Effect.pure(4),
+        Int.is_eq,
+    ),
+    Test.test(
+        "Effect: when",
+        Effect.when(true, Effect.noop)
+        |> Effect.map(Ok),
+    ),
+    Test.test(
+        "Effect: unless",
+        Effect.unless(false, Effect.noop)
+        |> Effect.map(Ok),
+    ),
+];
+
+test_is_eq = fn (
+    description: String,
+    ea: Effect(a),
+    eb: Effect(b),
+    eq: (a, b) -> Bool,
+): Test -> Test.test(
+    description,
+    do {
+        a <- ea;
+        b <- eb;
+        return Test.assert(eq(a, b))
+    },
+);

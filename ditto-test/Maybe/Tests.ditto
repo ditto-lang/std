@@ -1,0 +1,144 @@
+module Maybe.Tests exports (
+    tests,
+);
+
+import Bool;
+import Int;
+import Maybe (
+    Maybe(..),
+);
+import Never (
+    Never,
+);
+import Test (
+    Test,
+);
+
+
+tests: Array(Test) = [
+    Test.pure(
+        "Maybe: just with default",
+        Test.assert(
+            Just(2)
+            |> Maybe.with_default(4)
+            |> Int.is_eq(2),
+        ),
+    ),
+    Test.pure(
+        "Maybe: nothing with default",
+        Test.assert(
+            Nothing
+            |> Maybe.with_default(4)
+            |> Int.is_eq(4),
+        ),
+    ),
+    Test.pure(
+        "Maybe: just equality",
+        Test.assert(Maybe.is_eq(Just(2), Just(2), Int.is_eq)),
+    ),
+    Test.pure(
+        "Maybe: just inequality",
+        Test.assert(
+            Maybe.is_eq(Just(2), Just(3), Int.is_eq)
+            |> Bool.not,
+        ),
+    ),
+    Test.pure(
+        "Maybe: nothing equality",
+        Test.assert(
+            Maybe.is_eq(
+                Nothing,
+                Nothing,
+                fn (eh: Never, _: Never): Bool -> Never.never(eh),
+            ),
+        ),
+    ),
+    Test.pure(
+        "Maybe: mixed inequality",
+        Test.assert(
+            Maybe.is_eq(Nothing, Just(2), Int.is_eq)
+            |> Bool.not,
+        ),
+    ),
+    Test.pure(
+        "Maybe: map",
+        Test.assert(
+            Maybe.is_eq(
+                Just(1)
+                |> Maybe.map(fn (i) -> Int.add(i, 1)),
+                Just(2),
+                Int.is_eq,
+            ),
+        ),
+    ),
+    Test.pure(
+        "Maybe: map nothing",
+        Test.assert(
+            Maybe.is_eq(
+                Nothing
+                |> Maybe.map(fn (i) -> Int.add(i, 1)),
+                Nothing,
+                Int.is_eq,
+            ),
+        ),
+    ),
+    Test.pure(
+        "Maybe: apply",
+        Test.assert(
+            Maybe.is_eq(
+                Just(curry(Int.add))
+                |> Maybe.apply(Just(1))
+                |> Maybe.apply(Just(1)),
+                Just(2),
+                Int.is_eq,
+            ),
+        ),
+    ),
+    Test.pure(
+        "Maybe: apply nothing",
+        Test.assert(
+            Maybe.is_eq(
+                Just(curry(Int.add))
+                |> Maybe.apply(Just(1))
+                |> Maybe.apply(Nothing),
+                Nothing,
+                Int.is_eq,
+            ),
+        ),
+    ),
+    Test.pure(
+        "Maybe: and then",
+        Test.assert(
+            Maybe.is_eq(
+                Just(2)
+                |> Maybe.and_then(fn (i) -> Just(Int.add(i, 2))),
+                Just(4),
+                Int.is_eq,
+            ),
+        ),
+    ),
+    Test.pure(
+        "Maybe: and then nothing",
+        Test.assert(
+            Maybe.is_eq(
+                Just(2)
+                |> Maybe.and_then(fn (_) -> Nothing),
+                Nothing,
+                Int.is_eq,
+            ),
+        ),
+    ),
+    Test.pure(
+        "Maybe: or",
+        Test.assert(
+            Maybe.is_eq(
+                Nothing
+                |> Maybe.or(Just(2)),
+                Just(2),
+                Int.is_eq,
+            ),
+        ),
+    ),
+];
+
+curry = fn (f) -> fn (x) -> fn (y) -> f(x, y);

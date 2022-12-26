@@ -1,0 +1,14 @@
+module Float exports (
+    round,
+    is_eq,
+);
+
+
+round = round_impl;
+
+is_eq = fn (lhs: Float, rhs: Float, options: { tolerance: Float }) ->
+    is_eq_impl(lhs, rhs, options.tolerance);
+
+foreign round_impl: (Float) -> Int;
+
+foreign is_eq_impl: (Float, Float, Float) -> Bool;

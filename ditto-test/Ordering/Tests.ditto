@@ -1,0 +1,30 @@
+module Ordering.Tests exports (
+    tests,
+);
+
+import Bool;
+import Ordering (
+    Ordering(..),
+);
+import Test (
+    Test,
+);
+
+
+tests: Array(Test) = [
+    Test.pure(
+        "Ordering: or",
+        Test.assert(
+            Ordering.is_greater_than(Ordering.or(EQ, GT))
+            |> Bool.and(Ordering.is_less_than(Ordering.or(LT, GT))),
+        ),
+    ),
+    Test.pure(
+        "Ordering: reverse",
+        Test.assert(
+            Ordering.is_less_than(Ordering.reverse(GT))
+            |> Bool.and(Ordering.is_greater_than(Ordering.reverse(LT)))
+            |> Bool.and(Ordering.is_eq(Ordering.reverse(EQ))),
+        ),
+    ),
+];

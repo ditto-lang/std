@@ -1,0 +1,24 @@
+module Float.Tests exports (
+    tests,
+);
+
+import Float;
+import Int;
+import Test (
+    Test,
+);
+
+
+tests: Array(Test) = [
+    Test.pure(
+        "Float: round",
+        Test.assert(
+            Float.round(22.2)
+            |> Int.is_eq(22),
+        ),
+    ),
+    Test.pure(
+        "Float: equality",
+        Test.assert(Float.is_eq(55.5, 55.5, { tolerance = 0.0 })),
+    ),
+];

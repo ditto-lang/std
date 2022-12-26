@@ -1,0 +1,13 @@
+# Generated ditto stuff
+.ditto
+dist
+
+# NPM stuff
+node_modules
+package-lock.json
+
+# npm run gen-d-ts
+decls
+
+# c8 test coverage dir
+coverage

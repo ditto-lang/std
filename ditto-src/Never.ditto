@@ -1,0 +1,12 @@
+module Never exports (
+    Never,
+    never,
+);
+
+
+-- A value that can never be constructed
+type Never = JustOneMore(Never);
+
+-- Eliminates a `Never` type.
+-- Useful for stating that some code branch is impossible.
+never = fn (JustOneMore(naah): Never): a -> never(naah);

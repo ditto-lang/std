@@ -1,0 +1,62 @@
+module Maybe exports (
+    Maybe(..),
+    with_default,
+    is_eq,
+    map,
+    apply,
+    and_then,
+    or,
+);
+
+
+type Maybe(a) =
+    | Just(a)
+    | Nothing;
+
+with_default = fn (maybe: Maybe(a), default: a): a ->
+    match maybe with
+    | Just(a) -> a
+    | Nothing -> default
+    end;
+
+is_eq = fn (lhs: Maybe(a), rhs: Maybe(a), eq: (a, a) -> Bool): Bool ->
+    match lhs with
+    | Just(x) ->
+        match rhs with
+        | Just(y) -> eq(x, y)
+        | Nothing -> false
+        end
+    | Nothing ->
+        match rhs with
+        | Just(_) -> false
+        | Nothing -> true
+        end
+    end;
+
+map = fn (maybe: Maybe(a), f: (a) -> b): Maybe(b) ->
+    match maybe with
+    | Just(a) -> Just(f(a))
+    | Nothing -> Nothing
+    end;
+
+apply = fn (maybe_fn: Maybe((a) -> b), maybe_a: Maybe(a)): Maybe(b) ->
+    match maybe_fn with
+    | Just(f) ->
+        match maybe_a with
+        | Just(a) -> Just(f(a))
+        | Nothing -> Nothing
+        end
+    | Nothing -> Nothing
+    end;
+
+and_then = fn (maybe: Maybe(a), f: (a) -> Maybe(b)): Maybe(b) ->
+    match maybe with
+    | Just(a) -> f(a)
+    | Nothing -> Nothing
+    end;
+
+or = fn (maybe_this: Maybe(a), maybe_that: Maybe(a)): Maybe(a) ->
+    match maybe_this with
+    | Just(a) -> Just(a)
+    | Nothing -> maybe_that
+    end;

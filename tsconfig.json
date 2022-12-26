@@ -1,0 +1,17 @@
+{
+  "extends": "@tsconfig/strictest/tsconfig.json",
+  "compilerOptions": {
+    // generated JS doesn't (currently) have type annotations,
+    // so `any` is inferred in a lot of places :/
+    "noImplicitAny": false,
+
+    // `JustOneMore` (Never constructor) is never read, deliberately
+    "noUnusedLocals": false
+  },
+  "include": [
+    // compiled sources
+    "dist/*",
+    // foreign sources
+    "src/**/*.js"
+  ]
+}

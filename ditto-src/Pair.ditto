@@ -1,0 +1,24 @@
+module Pair exports (
+    Pair(..),
+    first,
+    second,
+    swap,
+    map_first,
+    map_second,
+    map_both,
+);
+
+
+type Pair(a, b) = Pair(a, b);
+
+first = fn (Pair(a, _)) -> a;
+
+second = fn (Pair(_, b)) -> b;
+
+swap = fn (Pair(a, b)) -> Pair(b, a);
+
+map_first = fn (Pair(a, b), f) -> Pair(f(a), b);
+
+map_second = fn (Pair(a, b), f) -> Pair(a, f(b));
+
+map_both = fn (Pair(a, b), f, g) -> Pair(f(a), g(b));

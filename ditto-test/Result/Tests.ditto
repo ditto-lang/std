@@ -1,0 +1,124 @@
+module Result.Tests exports (
+    tests,
+);
+
+import Int;
+import Never;
+import Result (
+    Result(..),
+);
+import String;
+import Test (
+    Test,
+);
+
+
+tests: Array(Test) = [
+    Test.pure(
+        "Result: map with ok",
+        assert_ok(
+            Ok(2)
+            |> Result.map(fn (i) -> Int.add(i, 5)),
+            7,
+            Int.is_eq,
+        ),
+    ),
+    Test.pure(
+        "Result: map with err",
+        assert_err(
+            Err("oops")
+            |> Result.map(Never.never),
+            "oops",
+            String.is_eq,
+        ),
+    ),
+    Test.pure(
+        "Result: map_err with err",
+        assert_err(
+            Err(2)
+            |> Result.map_err(fn (i) -> Int.add(i, 5)),
+            7,
+            Int.is_eq,
+        ),
+    ),
+    Test.pure(
+        "Result: map_err with ok",
+        assert_ok(
+            Ok(2)
+            |> Result.map_err(Never.never),
+            2,
+            Int.is_eq,
+        ),
+    ),
+    Test.pure(
+        "Result: apply",
+        assert_ok(
+            Ok(curry(Int.add))
+            |> Result.apply(Ok(1))
+            |> Result.apply(Ok(1)),
+            2,
+            Int.is_eq,
+        ),
+    ),
+    Test.pure(
+        "Result: apply with err",
+        assert_err(
+            Ok(curry(Int.add))
+            |> Result.apply(Ok(1))
+            |> Result.apply(Err("oops")),
+            "oops",
+            String.is_eq,
+        ),
+    ),
+    Test.pure(
+        "Result: and then",
+        assert_ok(
+            Ok(2)
+            |> Result.and_then(fn (i) -> Ok(Int.add(i, 2))),
+            4,
+            Int.is_eq,
+        ),
+    ),
+    Test.pure(
+        "Result: and then error",
+        assert_err(
+            Ok(2)
+            |> Result.and_then(fn (_) -> Err("oops")),
+            "oops",
+            String.is_eq,
+        ),
+    ),
+    Test.pure(
+        "Result: infallible",
+        assert_ok(
+            Ok(2)
+            |> Result.infallible,
+            2,
+            Int.is_eq,
+        ),
+    ),
+];
+
+assert_ok = fn (
+    result: Result(a, e),
+    want: a,
+    is_eq: (a, a) -> Bool,
+): Test.Result -> Test.assert(
+    match result with
+    | Ok(a) -> is_eq(a, want)
+    | Err(_) -> false
+    end,
+);
+
+assert_err = fn (
+    result: Result(a, e),
+    want: e,
+    is_eq: (e, e) -> Bool,
+): Test.Result -> Test.assert(
+    match result with
+    | Ok(_) -> false
+    | Err(e) -> is_eq(e, want)
+    end,
+);
+
+curry = fn (f) -> fn (x) -> fn (y) -> f(x, y);

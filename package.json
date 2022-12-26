@@ -1,0 +1,41 @@
+{
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "pretype-check": "ditto make",
+    "type-check": "tsc --noEmit",
+    "pretest": "ditto make",
+    "test": "node ./scripts/test.js",
+    "posttest": "npm run --ignore-scripts type-check",
+    "coverage": "c8 node ./scripts/test.js",
+    "gen-d-ts": "tsc --allowJs --declaration --emitDeclarationOnly --outDir decls --removeComments ditto-src/*.js"
+  },
+  "devDependencies": {
+    "c8": "7.12.0",
+    "chalk": "5.2.0",
+    "esbuild": "0.16.3",
+    "fast-check": "3.3.0",
+    "playwright": "1.28.1",
+    "prettier": "2.8.1",
+    "typescript": "4.9.4",
+    "@tsconfig/strictest": "1.0.2"
+  },
+  "c8": {
+    "include": [
+      "ditto-src",
+      "dist"
+    ],
+    "exclude": [
+      "dist/Main.js",
+      "dist/Test.js",
+      "dist/Fuzz.js",
+      "dist/*_Tests.js",
+      "dist/Never.js"
+    ],
+    "extension": "js",
+    "all": true,
+    "check-coverage": true,
+    "lines": 0,
+    "functions": 100
+  }
+}

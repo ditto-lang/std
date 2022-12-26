@@ -1,0 +1,42 @@
+module String.Tests exports (
+    tests,
+);
+
+import Bool;
+import Fuzz;
+import Int;
+import String;
+import Test (
+    Test,
+);
+
+
+tests: Array(Test) = [
+    Fuzz.test(
+        "String: equality",
+        Fuzz.string,
+        fn (str) -> String.is_eq(str, str),
+    ),
+    Test.pure("String: is empty", Test.assert(String.is_empty(""))),
+    Test.pure(
+        "String: is not empty",
+        Test.assert(
+            String.is_empty(" ")
+            |> Bool.not,
+        ),
+    ),
+    Test.pure(
+        "String: length 3",
+        Test.assert(
+            String.length("abc")
+            |> Int.is_eq(3),
+        ),
+    ),
+    Test.pure(
+        "String: length 0",
+        Test.assert(
+            String.length("")
+            |> Int.is_eq(0),
+        ),
+    ),
+];

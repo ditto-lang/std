@@ -1,0 +1,35 @@
+module StringMap exports (
+    StringMap,
+    empty,
+    keys,
+    get,
+    insert,
+);
+
+import Maybe (
+    Maybe(..),
+);
+
+
+type StringMap(value);
+
+empty: StringMap(value) = empty_impl;
+
+keys = keys_impl;
+
+get = fn (sm: StringMap(value), key: String): Maybe(value) -> get_impl(
+    sm,
+    key,
+    Just,
+    Nothing,
+);
+
+insert = insert_impl;
+
+foreign empty_impl: StringMap(value);
+
+foreign get_impl: (StringMap(value), String, (value) -> a, a) -> a;
+
+foreign insert_impl: (StringMap(value), String, value) -> StringMap(value);
+
+foreign keys_impl: (StringMap(value)) -> Array(String);

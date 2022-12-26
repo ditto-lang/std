@@ -1,0 +1,28 @@
+module Bool.Tests exports (
+    tests,
+);
+
+import Bool;
+import Test (
+    Test,
+);
+
+
+tests: Array(Test) = [
+    Test.pure("Bool: and", Test.assert(Bool.and(true, true))),
+    Test.pure("Bool: or", Test.assert(Bool.or(false, true))),
+    Test.pure(
+        "Bool: xor",
+        Test.assert(
+            Bool.and(
+                -- yep
+                Bool.xor(false, true),
+                Bool.not(
+                    -- nope
+                    Bool.xor(true, true),
+                ),
+            ),
+        ),
+    ),
+    Test.pure("Bool: not", Test.assert(Bool.not(false))),
+];

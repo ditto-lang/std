@@ -1,0 +1,37 @@
+module Fuzz exports (
+    Fuzz,
+    string,
+    int,
+    int_bounded,
+    test,
+);
+
+import Result;
+import Test (
+    Test,
+);
+
+
+type Fuzz(a);
+
+string = string_impl;
+
+int = int_impl;
+
+int_bounded = int_bounded_impl;
+
+test = fn (name: String, fuzzer: Fuzz(a), test_fn: (a) -> Bool): Test ->
+    Test.test(name, test_impl(fuzzer, test_fn, Result.Ok(unit), Result.Err));
+
+foreign string_impl: Fuzz(String);
+
+foreign int_impl: Fuzz(Int);
+
+foreign int_bounded_impl: ({ min: Int, max: Int }) -> Fuzz(Int);
+
+foreign test_impl: (
+    Fuzz(a),
+    (a) -> Bool,
+    Test.Result,
+    (String) -> Test.Result,
+) -> Effect(Test.Result);

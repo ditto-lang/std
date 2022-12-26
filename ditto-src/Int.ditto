@@ -1,0 +1,114 @@
+module Int exports (
+    -- comparsions
+    compare,
+    max,
+    min,
+    is_less_than,
+    is_less_than_or_eq,
+    is_eq,
+    is_not_eq,
+    is_greater_than,
+    is_greater_than_or_eq,
+    -- arithmetic
+    add,
+    subtract,
+    divide,
+    multiply,
+    remainder,
+    modulo,
+    -- conversions
+    to_string,
+    -- other
+    negate,
+);
+
+import Ordering (
+    Ordering(..),
+);
+
+
+compare = fn (lhs: Int, rhs: Int): Ordering -> compare_impl(
+    lhs,
+    rhs,
+    GT,
+    EQ,
+    LT,
+);
+
+max = fn (lhs: Int, rhs: Int): Int ->
+    if
+        lhs
+        |> is_greater_than(rhs)
+    then
+        lhs
+    else
+        rhs;
+
+min = fn (lhs: Int, rhs: Int): Int ->
+    if
+        lhs
+        |> is_less_than(rhs)
+    then
+        lhs
+    else
+        rhs;
+
+is_less_than = fn (lhs: Int, rhs: Int): Bool ->
+    compare(lhs, rhs)
+    |> Ordering.is_less_than;
+
+is_less_than_or_eq = fn (lhs: Int, rhs: Int): Bool ->
+    compare(lhs, rhs)
+    |> Ordering.is_less_than_or_eq;
+
+is_eq = fn (lhs: Int, rhs: Int): Bool ->
+    compare(lhs, rhs)
+    |> Ordering.is_eq;
+
+is_not_eq = fn (lhs: Int, rhs: Int): Bool ->
+    compare(lhs, rhs)
+    |> Ordering.is_not_eq;
+
+is_greater_than = fn (lhs: Int, rhs: Int): Bool ->
+    compare(lhs, rhs)
+    |> Ordering.is_greater_than;
+
+is_greater_than_or_eq = fn (lhs: Int, rhs: Int): Bool ->
+    compare(lhs, rhs)
+    |> Ordering.is_greater_than_or_eq;
+
+add = add_impl;
+
+subtract = subtract_impl;
+
+multiply = multiply_impl;
+
+divide = divide_impl;
+
+-- `remainder`always returns the same sign as the dividend.
+remainder = remainder_impl;
+
+-- `modulo `always returns the same sign as the divisor.
+modulo = modulo_impl;
+
+negate = negate_impl;
+
+to_string = to_string_impl;
+
+foreign compare_impl: (Int, Int, Ordering, Ordering, Ordering) -> Ordering;
+
+foreign subtract_impl: (Int, Int) -> Int;
+
+foreign add_impl: (Int, Int) -> Int;
+
+foreign multiply_impl: (Int, Int) -> Int;
+
+foreign divide_impl: (Int, Int) -> Float;
+
+foreign remainder_impl: (Int, Int) -> Int;
+
+foreign modulo_impl: (Int, Int) -> Int;
+
+foreign negate_impl: (Int) -> Int;
+
+foreign to_string_impl: (Int) -> String;
