@@ -51,8 +51,6 @@ tests: Array(Test) = [
         assert_is_eq(
             Array.map([], Never.never),
             [],
-            --fn (_, _) -> true     FIXME
-            -- fn (_, __) -> true   FIXME
             fn (nope, _) -> Never.never(nope),
         ),
     ),
