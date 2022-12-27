@@ -44,7 +44,6 @@ length_aux = fn (list: List(a), n: Int): Int ->
 
 foldl = fn (list: List(a), acc: b, f: (b, a) -> b): b ->
     match list with
-    -- | Cons(a, rest) -> foldl() FIXME
     | Cons(a, rest) -> foldl(rest, f(acc, a), f)
     | Nil -> acc
     end;
