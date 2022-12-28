@@ -1,2 +1,6 @@
 name = "std"
 targets = ["web", "nodejs"]
+
+[codegen-js.package-json]
+# https://webpack.js.org/guides/tree-shaking/
+sideEffects = false
