@@ -49,7 +49,7 @@ tests: Array(Test) = [
             Maybe.is_eq(
                 Nothing,
                 Nothing,
-                fn (eh: Never, _: Never): Bool -> Never.never(eh),
+                fn (eh: Never, _: Never): Bool -> Never.unreachable(eh),
             ),
         ),
     ),

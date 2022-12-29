@@ -9,7 +9,7 @@ module Result exports (
 
 import Never (
     Never,
-    never,
+    unreachable,
 );
 
 
@@ -51,5 +51,5 @@ and_then = fn (result: Result(a, e), f: (a) -> Result(b, e)): Result(b, e) ->
 infallible = fn (result: Result(a, Never)): Result(a, e) ->
     match result with
     | Ok(a) -> Ok(a)
-    | Err(nah) -> never(nah)
+    | Err(nah) -> unreachable(nah)
     end;

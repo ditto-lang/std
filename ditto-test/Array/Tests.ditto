@@ -49,9 +49,9 @@ tests: Array(Test) = [
     Test.pure(
         "Array: map empty",
         assert_is_eq(
-            Array.map([], Never.never),
+            Array.map([], Never.unreachable),
             [],
-            fn (nope, _) -> Never.never(nope),
+            fn (nope, _) -> Never.unreachable(nope),
         ),
     ),
     Test.pure(

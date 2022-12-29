@@ -27,7 +27,7 @@ tests: Array(Test) = [
         "Result: map with err",
         assert_err(
             Err("oops")
-            |> Result.map(Never.never),
+            |> Result.map(Never.unreachable),
             "oops",
             String.is_eq,
         ),
@@ -45,7 +45,7 @@ tests: Array(Test) = [
         "Result: map_err with ok",
         assert_ok(
             Ok(2)
-            |> Result.map_err(Never.never),
+            |> Result.map_err(Never.unreachable),
             2,
             Int.is_eq,
         ),
