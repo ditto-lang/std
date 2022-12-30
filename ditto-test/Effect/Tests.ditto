@@ -26,9 +26,9 @@ tests: Array(Test) = [
         |> Effect.map(Ok),
     ),
     Test.test(
-        "Effect: void",
+        "Effect: discard",
         Effect.pure("hello")
-        |> Effect.void
+        |> Effect.discard
         |> Effect.map(Ok),
     ),
     test_is_eq(
