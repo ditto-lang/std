@@ -128,6 +128,14 @@ tests: Array(Test) = [
             Int.is_eq,
         ),
     ),
+    Test.pure(
+        "Array: from",
+        assert_is_eq(
+            Array.from(5, fn (i) -> Int.add(100, i)),
+            [100, 101, 102, 103, 104],
+            Int.is_eq,
+        ),
+    ),
 ];
 
 is_even = fn (x: Int): Bool ->

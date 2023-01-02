@@ -1,5 +1,15 @@
 /**
  * @template A
+ * @param {number} length
+ * @param {(i: number) => A} f
+ * @returns {readonly A[]}
+ */
+export function from_impl(length, f) {
+  return Array.from({ length }, (_, i) => f(i));
+}
+
+/**
+ * @template A
  * @template B
  * @param {readonly A[]} array
  * @param {number} i

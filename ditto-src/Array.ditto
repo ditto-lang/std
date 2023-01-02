@@ -1,4 +1,5 @@
 module Array exports (
+    from,
     zip,
     get,
     zip_with,
@@ -26,6 +27,8 @@ import Pair (
     Pair(..),
 );
 
+
+from = from_impl;
 
 get = fn (array: Array(a), i: Int): Maybe(a) -> get_impl(
     array,
@@ -111,6 +114,8 @@ is_empty = fn (array: Array(a)): Bool ->
     |> Int.is_eq(0);
 
 concat = concat_impl;
+
+foreign from_impl: (Int, (Int) -> a) -> Array(a);
 
 foreign get_impl: (Array(a), Int, (a) -> Maybe(a), Maybe(a)) -> Maybe(a);
 
