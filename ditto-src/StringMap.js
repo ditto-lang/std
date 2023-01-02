@@ -31,6 +31,17 @@ export function insert_impl(sm, key, value) {
 /**
  * @template T
  * @param {StringMap<T>} sm
+ * @param {string} key
+ * @returns {StringMap<T>}
+ */
+export function remove_impl(sm, key) {
+  const { [key]: _, ...rest } = sm;
+  return rest;
+}
+
+/**
+ * @template T
+ * @param {StringMap<T>} sm
  * @returns {readonly string[]}
  */
 export function keys_impl(sm) {

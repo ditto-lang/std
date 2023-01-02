@@ -30,7 +30,10 @@ tests: Array(Test) = [
                 |> StringMap.insert("c", unit)
                 |> StringMap.insert("c", unit);
         in
-        Test.assert(Int.is_eq(Array.length(StringMap.keys(sm)), 3)),
+        Test.assert(
+            Array.length(StringMap.keys(sm))
+            |> Int.is_eq(3),
+        ),
     ),
     Test.pure(
         "StringMap: get",
@@ -56,6 +59,19 @@ tests: Array(Test) = [
             | Maybe.Just(_) -> false
             | Maybe.Nothing -> true
             end,
+        ),
+    ),
+    Test.pure(
+        "StringMap: remove",
+        let
+            sm =
+                StringMap.empty
+                |> StringMap.insert("a", 0)
+                |> StringMap.remove("a");
+        in
+        Test.assert(
+            Array.length(StringMap.keys(sm))
+            |> Int.is_eq(0),
         ),
     ),
 ];
