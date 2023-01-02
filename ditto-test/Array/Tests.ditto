@@ -1,5 +1,6 @@
 module Array.Tests exports (
     tests,
+    array_is_eq,
 );
 
 import Array;

@@ -3,6 +3,9 @@ module StringMap.Tests exports (
 );
 
 import Array;
+import Array.Tests (
+    array_is_eq,
+);
 import Int;
 import Maybe;
 import StringMap;
@@ -73,5 +76,17 @@ tests: Array(Test) = [
             Array.length(StringMap.keys(sm))
             |> Int.is_eq(0),
         ),
+    ),
+    Test.pure(
+        "StringMap: values",
+        let
+            sm =
+                StringMap.empty
+                |> StringMap.insert("a", 0)
+                |> StringMap.insert("b", 1)
+                |> StringMap.insert("c", 2)
+                |> StringMap.insert("d", 3);
+        in
+        Test.assert(array_is_eq(StringMap.values(sm), [0, 1, 2, 3], Int.is_eq)),
     ),
 ];

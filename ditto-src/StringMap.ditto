@@ -2,11 +2,13 @@ module StringMap exports (
     StringMap,
     empty,
     keys,
+    values,
     get,
     remove,
     insert,
 );
 
+import Array;
 import Maybe (
     Maybe(..),
 );
@@ -17,6 +19,11 @@ type StringMap(value);
 empty: StringMap(value) = empty_impl;
 
 keys = keys_impl;
+
+values = fn (sm: StringMap(value)): Array(value) ->
+    keys(sm)
+    |> Array.map(fn (key) -> get(sm, key))
+    |> Array.filter(fn (mb) -> mb);
 
 get = fn (sm: StringMap(value), key: String): Maybe(value) -> get_impl(
     sm,
