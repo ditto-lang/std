@@ -1,6 +1,7 @@
 {
   "extends": "@tsconfig/strictest/tsconfig.json",
   "compilerOptions": {
+    "moduleResolution": "node",
     // For Array.from
     "target": "es2015",
     // generated JS doesn't (currently) have type annotations,
@@ -13,6 +14,6 @@
     // compiled sources
     "dist/*",
     // foreign sources
-    "src/**/*.js"
+    "ditto-src/**/*.js"
   ]
 }
