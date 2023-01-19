@@ -1,23 +1,23 @@
 module Main exports (
     main,
-);
+)
 
-import Array as A;
-import Array.Tests as Array;
-import Bool.Tests as Bool;
-import Effect.Tests as Effect;
-import Float.Tests as Float;
-import Int.Tests as Int;
-import List.Tests as List;
-import Maybe.Tests as Maybe;
-import Ordering.Tests as Ordering;
-import Pair.Tests as Pair;
-import Result.Tests as Result;
-import String.Tests as String;
-import StringMap.Tests as StringMap;
+import Array as A
+import Array.Tests as Array
+import Bool.Tests as Bool
+import Effect.Tests as Effect
+import Float.Tests as Float
+import Int.Tests as Int
+import List.Tests as List
+import Maybe.Tests as Maybe
+import Ordering.Tests as Ordering
+import Pair.Tests as Pair
+import Result.Tests as Result
+import String.Tests as String
+import StringMap.Tests as StringMap
 import Test (
     run_tests,
-);
+)
 
 
 tests = A.concat(
@@ -35,6 +35,6 @@ tests = A.concat(
         Result.tests,
         StringMap.tests,
     ],
-);
+)
 
-main = fn (args) -> run_tests(args, tests);
+main = fn (args) -> run_tests(args, tests)

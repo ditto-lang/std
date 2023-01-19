@@ -1,18 +1,18 @@
 module Maybe.Tests exports (
     tests,
-);
+)
 
-import Bool;
-import Int;
+import Bool
+import Int
 import Maybe (
     Maybe(..),
-);
+)
 import Never (
     Never,
-);
+)
 import Test (
     Test,
-);
+)
 
 
 tests: Array(Test) = [
@@ -139,6 +139,6 @@ tests: Array(Test) = [
             ),
         ),
     ),
-];
+]
 
-curry = fn (f) -> fn (x) -> fn (y) -> f(x, y);
+curry = fn (f) -> fn (x) -> fn (y) -> f(x, y)

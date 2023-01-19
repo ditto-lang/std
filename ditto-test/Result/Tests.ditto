@@ -1,16 +1,16 @@
 module Result.Tests exports (
     tests,
-);
+)
 
-import Int;
-import Never;
+import Int
+import Never
 import Result (
     Result(..),
-);
-import String;
+)
+import String
 import Test (
     Test,
-);
+)
 
 
 tests: Array(Test) = [
@@ -97,7 +97,7 @@ tests: Array(Test) = [
             Int.is_eq,
         ),
     ),
-];
+]
 
 assert_ok = fn (
     result: Result(a, e),
@@ -108,7 +108,7 @@ assert_ok = fn (
     | Ok(a) -> is_eq(a, want)
     | Err(_) -> false
     end,
-);
+)
 
 assert_err = fn (
     result: Result(a, e),
@@ -119,6 +119,6 @@ assert_err = fn (
     | Ok(_) -> false
     | Err(e) -> is_eq(e, want)
     end,
-);
+)
 
-curry = fn (f) -> fn (x) -> fn (y) -> f(x, y);
+curry = fn (f) -> fn (x) -> fn (y) -> f(x, y)

@@ -1,11 +1,11 @@
 module Bool.Tests exports (
     tests,
-);
+)
 
-import Bool;
+import Bool
 import Test (
     Test,
-);
+)
 
 
 tests: Array(Test) = [
@@ -25,4 +25,4 @@ tests: Array(Test) = [
         ),
     ),
     Test.pure("Bool: not", Test.assert(Bool.not(false))),
-];
+]

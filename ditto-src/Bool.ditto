@@ -3,21 +3,21 @@ module Bool exports (
     or,
     xor,
     not,
-);
+)
 
 
-and = and_impl;
+and = and_impl
 
-or = or_impl;
+or = or_impl
 
-xor = xor_impl;
+xor = xor_impl
 
-not = not_impl;
+not = not_impl
 
-foreign and_impl: (Bool, Bool) -> Bool;
+foreign and_impl: (Bool, Bool) -> Bool
 
-foreign or_impl: (Bool, Bool) -> Bool;
+foreign or_impl: (Bool, Bool) -> Bool
 
-foreign xor_impl: (Bool, Bool) -> Bool;
+foreign xor_impl: (Bool, Bool) -> Bool
 
-foreign not_impl: (Bool) -> Bool;
+foreign not_impl: (Bool) -> Bool

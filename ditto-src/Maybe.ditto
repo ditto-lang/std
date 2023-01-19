@@ -6,18 +6,18 @@ module Maybe exports (
     apply,
     and_then,
     or,
-);
+)
 
 
 type Maybe(a) =
     | Just(a)
-    | Nothing;
+    | Nothing
 
 with_default = fn (maybe: Maybe(a), default: a): a ->
     match maybe with
     | Just(a) -> a
     | Nothing -> default
-    end;
+    end
 
 is_eq = fn (lhs: Maybe(a), rhs: Maybe(a), eq: (a, a) -> Bool): Bool ->
     match lhs with
@@ -31,13 +31,13 @@ is_eq = fn (lhs: Maybe(a), rhs: Maybe(a), eq: (a, a) -> Bool): Bool ->
         | Just(_) -> false
         | Nothing -> true
         end
-    end;
+    end
 
 map = fn (maybe: Maybe(a), f: (a) -> b): Maybe(b) ->
     match maybe with
     | Just(a) -> Just(f(a))
     | Nothing -> Nothing
-    end;
+    end
 
 apply = fn (maybe_fn: Maybe((a) -> b), maybe_a: Maybe(a)): Maybe(b) ->
     match maybe_fn with
@@ -47,16 +47,16 @@ apply = fn (maybe_fn: Maybe((a) -> b), maybe_a: Maybe(a)): Maybe(b) ->
         | Nothing -> Nothing
         end
     | Nothing -> Nothing
-    end;
+    end
 
 and_then = fn (maybe: Maybe(a), f: (a) -> Maybe(b)): Maybe(b) ->
     match maybe with
     | Just(a) -> f(a)
     | Nothing -> Nothing
-    end;
+    end
 
 or = fn (maybe_this: Maybe(a), maybe_that: Maybe(a)): Maybe(a) ->
     match maybe_this with
     | Just(a) -> Just(a)
     | Nothing -> maybe_that
-    end;
+    end

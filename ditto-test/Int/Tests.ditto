@@ -1,16 +1,16 @@
 module Int.Tests exports (
     tests,
-);
+)
 
-import Bool;
-import Float;
-import Fuzz;
-import Int;
-import Result;
-import String;
+import Bool
+import Float
+import Fuzz
+import Int
+import Result
+import String
 import Test (
     Test,
-);
+)
 
 
 tests: Array(Test) = [
@@ -163,4 +163,4 @@ tests: Array(Test) = [
             |> Int.is_eq(500),
         ),
     ),
-];
+]

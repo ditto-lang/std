@@ -1,14 +1,14 @@
 module String.Tests exports (
     tests,
-);
+)
 
-import Bool;
-import Fuzz;
-import Int;
-import String;
+import Bool
+import Fuzz
+import Int
+import String
 import Test (
     Test,
-);
+)
 
 
 tests: Array(Test) = [
@@ -39,4 +39,4 @@ tests: Array(Test) = [
             |> Int.is_eq(0),
         ),
     ),
-];
+]

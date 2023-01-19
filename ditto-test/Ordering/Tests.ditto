@@ -1,14 +1,14 @@
 module Ordering.Tests exports (
     tests,
-);
+)
 
-import Bool;
+import Bool
 import Ordering (
     Ordering(..),
-);
+)
 import Test (
     Test,
-);
+)
 
 
 tests: Array(Test) = [
@@ -27,4 +27,4 @@ tests: Array(Test) = [
             |> Bool.and(Ordering.is_eq(Ordering.reverse(EQ))),
         ),
     ),
-];
+]

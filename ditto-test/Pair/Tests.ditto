@@ -1,15 +1,15 @@
 module Pair.Tests exports (
     tests,
-);
+)
 
-import Bool;
-import Int;
+import Bool
+import Int
 import Pair (
     Pair(..),
-);
+)
 import Test (
     Test,
-);
+)
 
 
 tests: Array(Test) = [
@@ -52,15 +52,15 @@ tests: Array(Test) = [
             Int.is_eq,
         ),
     ),
-];
+]
 
-add_one = fn (i) -> Int.add(i, 1);
+add_one = fn (i) -> Int.add(i, 1)
 
 assert_is_eq = fn (x, y, is_eq_first, is_eq_second): Test.Result -> Test.assert(
     pair_is_eq(x, y, is_eq_first, is_eq_second),
-);
+)
 
 pair_is_eq = fn (Pair(a, b), Pair(c, d), is_eq_first, is_eq_second) -> Bool.and(
     is_eq_first(a, c),
     is_eq_second(b, d),
-);
+)

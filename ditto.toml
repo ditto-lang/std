@@ -1,5 +1,6 @@
 name = "std"
 targets = ["web", "nodejs"]
+ditto-version = ">=0.0.3"
 
 [codegen-js.package-json]
 # https://webpack.js.org/guides/tree-shaking/

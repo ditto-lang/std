@@ -1,18 +1,18 @@
 module List.Tests exports (
     tests,
-);
+)
 
-import Bool;
-import Int;
+import Bool
+import Int
 import List (
     List(..),
-);
+)
 import Pair (
     Pair(..),
-);
+)
 import Test (
     Test,
-);
+)
 
 
 tests: Array(Test) = [
@@ -48,14 +48,14 @@ tests: Array(Test) = [
             Int.is_eq,
         ),
     ),
-];
+]
 
 assert_is_eq = fn (xs: List(a), ys: List(b), eq: (a, b) -> Bool): Test.Result ->
-    Test.assert(list_is_eq(xs, ys, eq));
+    Test.assert(list_is_eq(xs, ys, eq))
 
 list_is_eq = fn (xs: List(a), ys: List(b), eq: (a, b) -> Bool): Bool ->
     Bool.and(
         Int.is_eq(List.length(xs), List.length(ys)),
         List.zip(xs, ys)
         |> List.foldl(true, fn (acc, Pair(x, y)) -> Bool.and(acc, eq(x, y))),
-    );
+    )

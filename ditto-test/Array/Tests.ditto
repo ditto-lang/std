@@ -1,22 +1,22 @@
 module Array.Tests exports (
     tests,
     array_is_eq,
-);
+)
 
-import Array;
-import Bool;
-import Int;
+import Array
+import Bool
+import Int
 import Maybe (
     Maybe(..),
-);
-import Never;
+)
+import Never
 import Pair (
     Pair(..),
-);
-import String;
+)
+import String
 import Test (
     Test,
-);
+)
 
 
 tests: Array(Test) = [
@@ -136,22 +136,22 @@ tests: Array(Test) = [
             Int.is_eq,
         ),
     ),
-];
+]
 
 is_even = fn (x: Int): Bool ->
     x
     |> Int.remainder(2)
-    |> Int.is_eq(0);
+    |> Int.is_eq(0)
 
 assert_is_eq = fn (
     xs: Array(a),
     ys: Array(b),
     eq: (a, b) -> Bool,
-): Test.Result -> Test.assert(array_is_eq(xs, ys, eq));
+): Test.Result -> Test.assert(array_is_eq(xs, ys, eq))
 
 array_is_eq = fn (xs: Array(a), ys: Array(b), eq: (a, b) -> Bool): Bool ->
     Bool.and(
         Int.is_eq(Array.length(xs), Array.length(ys)),
         Array.zip(xs, ys)
         |> Array.foldl(true, fn (acc, Pair(x, y)) -> Bool.and(acc, eq(x, y))),
-    );
+    )

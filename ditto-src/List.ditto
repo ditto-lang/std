@@ -6,52 +6,52 @@ module List exports (
     foldl,
     zip,
     zip_with,
-);
+)
 
-import Int;
+import Int
 import Pair (
     Pair(..),
-);
+)
 
 
 type List(a) =
     | Cons(a, List(a))
-    | Nil;
+    | Nil
 
-reverse = fn (list: List(a)): List(a) -> reverse_aux(list, Nil);
+reverse = fn (list: List(a)): List(a) -> reverse_aux(list, Nil)
 
 reverse_aux = fn (list: List(a), acc: List(a)): List(a) ->
     match list with
     | Cons(a, rest) -> reverse_aux(rest, Cons(a, acc))
     | Nil -> acc
-    end;
+    end
 
-map = fn (list: List(a), f: (a) -> b): List(b) -> map_aux(list, f, Nil);
+map = fn (list: List(a), f: (a) -> b): List(b) -> map_aux(list, f, Nil)
 
 map_aux = fn (list: List(a), f: (a) -> b, acc: List(b)): List(b) ->
     match list with
     | Cons(a, rest) -> map_aux(rest, f, Cons(f(a), acc))
     | Nil -> reverse(acc)
-    end;
+    end
 
-length = fn (list: List(a)): Int -> length_aux(list, 0);
+length = fn (list: List(a)): Int -> length_aux(list, 0)
 
 length_aux = fn (list: List(a), n: Int): Int ->
     match list with
     | Cons(_, rest) -> length_aux(rest, Int.add(n, 1))
     | Nil -> n
-    end;
+    end
 
 foldl = fn (list: List(a), acc: b, f: (b, a) -> b): b ->
     match list with
     | Cons(a, rest) -> foldl(rest, f(acc, a), f)
     | Nil -> acc
-    end;
+    end
 
-zip = fn (xs: List(a), ys: List(b)): List(Pair(a, b)) -> zip_with(xs, ys, Pair);
+zip = fn (xs: List(a), ys: List(b)): List(Pair(a, b)) -> zip_with(xs, ys, Pair)
 
 zip_with = fn (xs: List(a), ys: List(b), f: (a, b) -> c): List(c) ->
-    zip_with_aux(xs, ys, f, Nil);
+    zip_with_aux(xs, ys, f, Nil)
 
 zip_with_aux = fn (
     xs: List(a),
@@ -66,4 +66,4 @@ zip_with_aux = fn (
         | Nil -> reverse(acc)
         end
     | Nil -> reverse(acc)
-    end;
+    end

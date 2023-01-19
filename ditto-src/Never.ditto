@@ -1,12 +1,12 @@
 module Never exports (
     Never,
     unreachable,
-);
+)
 
 
 -- A value that can never be constructed
-type Never = JustOneMore(Never);
+type Never = JustOneMore(Never)
 
 -- Eliminates a `Never` type.
 -- Useful for stating that some code branch is impossible.
-unreachable = fn (JustOneMore(naah): Never): a -> unreachable(naah);
+unreachable = fn (JustOneMore(naah): Never): a -> unreachable(naah)

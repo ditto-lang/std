@@ -1,16 +1,16 @@
 module Effect.Tests exports (
     tests,
-);
+)
 
-import Effect;
-import Int;
+import Effect
+import Int
 import Result (
     Result(..),
-);
-import String;
+)
+import String
 import Test (
     Test,
-);
+)
 
 
 tests: Array(Test) = [
@@ -48,7 +48,7 @@ tests: Array(Test) = [
         Effect.unless(false, Effect.noop)
         |> Effect.map(Ok),
     ),
-];
+]
 
 test_is_eq = fn (
     description: String,
@@ -62,4 +62,4 @@ test_is_eq = fn (
         b <- eb;
         return Test.assert(eq(a, b))
     },
-);
+)

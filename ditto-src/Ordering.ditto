@@ -8,14 +8,14 @@ module Ordering exports (
     is_not_eq,
     is_greater_than_or_eq,
     is_greater_than,
-);
+)
 
 
 -- The result of comparing two values.
 type Ordering =
     | LT
     | EQ
-    | GT;
+    | GT
 
 -- Reversing an ordering "flips" it.
 --
@@ -29,7 +29,7 @@ reverse = fn (ordering: Ordering): Ordering ->
     | LT -> GT
     | EQ -> EQ
     | GT -> LT
-    end;
+    end
 
 -- Returns the first argument if it's _not_ `EQ`, otherwise returns the second argument.
 -- Useful for _combining_ comparisons.
@@ -43,46 +43,46 @@ or = fn (lhs: Ordering, rhs: Ordering): Ordering ->
     match lhs with
     | EQ -> rhs
     | _ -> lhs
-    end;
+    end
 
 is_less_than = fn (ordering: Ordering) ->
     match ordering with
     | LT -> true
     | EQ -> false
     | GT -> false
-    end;
+    end
 
 is_less_than_or_eq = fn (ordering: Ordering) ->
     match ordering with
     | LT -> true
     | EQ -> true
     | GT -> false
-    end;
+    end
 
 is_eq = fn (ordering: Ordering) ->
     match ordering with
     | LT -> false
     | EQ -> true
     | GT -> false
-    end;
+    end
 
 is_not_eq = fn (ordering: Ordering) ->
     match ordering with
     | LT -> true
     | EQ -> false
     | GT -> true
-    end;
+    end
 
 is_greater_than_or_eq = fn (ordering: Ordering) ->
     match ordering with
     | LT -> false
     | EQ -> true
     | GT -> true
-    end;
+    end
 
 is_greater_than = fn (ordering: Ordering) ->
     match ordering with
     | LT -> false
     | EQ -> false
     | GT -> true
-    end;
+    end

@@ -1,17 +1,17 @@
 module StringMap.Tests exports (
     tests,
-);
+)
 
-import Array;
+import Array
 import Array.Tests (
     array_is_eq,
-);
-import Int;
-import Maybe;
-import StringMap;
+)
+import Int
+import Maybe
+import StringMap
 import Test (
     Test,
-);
+)
 
 
 tests: Array(Test) = [
@@ -31,7 +31,7 @@ tests: Array(Test) = [
                 |> StringMap.insert("a", unit)
                 |> StringMap.insert("b", unit)
                 |> StringMap.insert("c", unit)
-                |> StringMap.insert("c", unit);
+                |> StringMap.insert("c", unit)
         in
         Test.assert(
             Array.length(StringMap.keys(sm))
@@ -46,7 +46,7 @@ tests: Array(Test) = [
                 |> StringMap.insert("a", 0)
                 |> StringMap.insert("b", 1)
                 |> StringMap.insert("c", 2)
-                |> StringMap.insert("c", 3);
+                |> StringMap.insert("c", 3)
         in
         Test.assert(
             match StringMap.get(sm, "c") with
@@ -70,7 +70,7 @@ tests: Array(Test) = [
             sm =
                 StringMap.empty
                 |> StringMap.insert("a", 0)
-                |> StringMap.remove("a");
+                |> StringMap.remove("a")
         in
         Test.assert(
             Array.length(StringMap.keys(sm))
@@ -85,8 +85,8 @@ tests: Array(Test) = [
                 |> StringMap.insert("a", 0)
                 |> StringMap.insert("b", 1)
                 |> StringMap.insert("c", 2)
-                |> StringMap.insert("d", 3);
+                |> StringMap.insert("d", 3)
         in
         Test.assert(array_is_eq(StringMap.values(sm), [0, 1, 2, 3], Int.is_eq)),
     ),
-];
+]

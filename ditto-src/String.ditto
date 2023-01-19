@@ -2,19 +2,19 @@ module String exports (
     length,
     is_empty,
     is_eq,
-);
+)
 
-import Int;
+import Int
 
 
-length = length_impl;
+length = length_impl
 
 is_empty = fn (str: String): Bool ->
     length(str)
-    |> Int.is_eq(0);
+    |> Int.is_eq(0)
 
-is_eq = is_eq_impl;
+is_eq = is_eq_impl
 
-foreign length_impl: (String) -> Int;
+foreign length_impl: (String) -> Int
 
-foreign is_eq_impl: (String, String) -> Bool;
+foreign is_eq_impl: (String, String) -> Bool

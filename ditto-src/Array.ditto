@@ -14,34 +14,34 @@ module Array exports (
     length,
     is_empty,
     concat,
-);
+)
 
-import Int;
+import Int
 import Maybe (
     Maybe(..),
-);
+)
 import Ordering (
     Ordering(..),
-);
+)
 import Pair (
     Pair(..),
-);
+)
 
 
-from = from_impl;
+from = from_impl
 
 get = fn (array: Array(a), i: Int): Maybe(a) -> get_impl(
     array,
     i,
     Just,
     Nothing,
-);
+)
 
 zip = fn (xs: Array(a), ys: Array(b)): Array(Pair(a, b)) -> zip_with(
     xs,
     ys,
     Pair,
-);
+)
 
 zip_with = fn (xs: Array(a), ys: Array(b), f: (a, b) -> c): Array(c) ->
     if
@@ -66,19 +66,19 @@ zip_with = fn (xs: Array(a), ys: Array(b), f: (a, b) -> c): Array(c) ->
                 | Just(a) -> push_end(acc, f(a, b))
                 | Nothing -> acc
                 end,
-        );
+        )
 
 map = fn (array: Array(a), f: (a) -> b): Array(b) -> map_with_index(
     array,
     fn (_i, a) -> f(a),
-);
+)
 
-map_with_index = map_with_index_impl;
+map_with_index = map_with_index_impl
 
 sort = fn (array: Array(a), compare: (a, a) -> Ordering): Array(a) -> sort_impl(
     array,
     fn (lhs, rhs) -> ordering_to_int(compare(lhs, rhs)),
-);
+)
 
 -- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
 ordering_to_int = fn (ordering) ->
@@ -86,51 +86,51 @@ ordering_to_int = fn (ordering) ->
     | GT -> 1
     | EQ -> 0
     | LT -> Int.negate(1)
-    end;
+    end
 
-foldl = foldl_impl;
+foldl = foldl_impl
 
-foldr = foldr_impl;
+foldr = foldr_impl
 
 filter = fn (array: Array(a), f: (a) -> Maybe(b)): Array(b) ->
     array
     |> map(fn (a) -> maybe_to_array(f(a)))
-    |> concat;
+    |> concat
 
 maybe_to_array = fn (mb: Maybe(a)): Array(a) ->
     match mb with
     | Just(a) -> [a]
     | Nothing -> []
-    end;
+    end
 
-push_start = push_start_impl;
+push_start = push_start_impl
 
-push_end = push_end_impl;
+push_end = push_end_impl
 
-length = length_impl;
+length = length_impl
 
 is_empty = fn (array: Array(a)): Bool ->
     length(array)
-    |> Int.is_eq(0);
+    |> Int.is_eq(0)
 
-concat = concat_impl;
+concat = concat_impl
 
-foreign from_impl: (Int, (Int) -> a) -> Array(a);
+foreign from_impl: (Int, (Int) -> a) -> Array(a)
 
-foreign get_impl: (Array(a), Int, (a) -> Maybe(a), Maybe(a)) -> Maybe(a);
+foreign get_impl: (Array(a), Int, (a) -> Maybe(a), Maybe(a)) -> Maybe(a)
 
-foreign map_with_index_impl: (Array(a), (Int, a) -> b) -> Array(b);
+foreign map_with_index_impl: (Array(a), (Int, a) -> b) -> Array(b)
 
-foreign sort_impl: (Array(a), (a, a) -> Int) -> Array(a);
+foreign sort_impl: (Array(a), (a, a) -> Int) -> Array(a)
 
-foreign foldl_impl: (Array(a), b, (b, a) -> b) -> b;
+foreign foldl_impl: (Array(a), b, (b, a) -> b) -> b
 
-foreign foldr_impl: (Array(a), b, (a, b) -> b) -> b;
+foreign foldr_impl: (Array(a), b, (a, b) -> b) -> b
 
-foreign push_start_impl: (Array(a), a) -> Array(a);
+foreign push_start_impl: (Array(a), a) -> Array(a)
 
-foreign push_end_impl: (Array(a), a) -> Array(a);
+foreign push_end_impl: (Array(a), a) -> Array(a)
 
-foreign length_impl: (Array(a)) -> Int;
+foreign length_impl: (Array(a)) -> Int
 
-foreign concat_impl: (Array(Array(a))) -> Array(a);
+foreign concat_impl: (Array(Array(a))) -> Array(a)

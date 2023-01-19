@@ -6,42 +6,42 @@ module StringMap exports (
     get,
     remove,
     insert,
-);
+)
 
-import Array;
+import Array
 import Maybe (
     Maybe(..),
-);
+)
 
 
-type StringMap(value);
+type StringMap(value)
 
-empty: StringMap(value) = empty_impl;
+empty: StringMap(value) = empty_impl
 
-keys = keys_impl;
+keys = keys_impl
 
 values = fn (sm: StringMap(value)): Array(value) ->
     keys(sm)
     |> Array.map(fn (key) -> get(sm, key))
-    |> Array.filter(fn (mb) -> mb);
+    |> Array.filter(fn (mb) -> mb)
 
 get = fn (sm: StringMap(value), key: String): Maybe(value) -> get_impl(
     sm,
     key,
     Just,
     Nothing,
-);
+)
 
-insert = insert_impl;
+insert = insert_impl
 
-remove = remove_impl;
+remove = remove_impl
 
-foreign empty_impl: StringMap(value);
+foreign empty_impl: StringMap(value)
 
-foreign get_impl: (StringMap(value), String, (value) -> a, a) -> a;
+foreign get_impl: (StringMap(value), String, (value) -> a, a) -> a
 
-foreign insert_impl: (StringMap(value), String, value) -> StringMap(value);
+foreign insert_impl: (StringMap(value), String, value) -> StringMap(value)
 
-foreign remove_impl: (StringMap(value), String) -> StringMap(value);
+foreign remove_impl: (StringMap(value), String) -> StringMap(value)
 
-foreign keys_impl: (StringMap(value)) -> Array(String);
+foreign keys_impl: (StringMap(value)) -> Array(String)
