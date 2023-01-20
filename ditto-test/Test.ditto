@@ -11,17 +11,15 @@ module Test exports (
 
 import Array
 import Bool
-import Effect (
-    VoidEffect,
-)
+import Effect
 import Result
 
 
 type Test = Test((Args) -> Effect(Bool))
 
 type alias Args = {
-    log_success: ({ description: String }) -> VoidEffect,
-    log_error: ({ description: String, error: String }) -> VoidEffect,
+    log_success: ({ description: String }) -> Effect(Unit),
+    log_error: ({ description: String, error: String }) -> Effect(Unit),
 }
 
 type alias Result = Result.Result(Unit, String)
