@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+     branches:
+      - main
+
+jobs:
+  test-js:
+    name: Test library on JavaScript target(s) 🧪
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+      fail-fast: false
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Setup Nodejs
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: .nvmrc
+          cache: "npm"
+
+      - name: Setup ditto
+        id: setup-ditto
+        uses: ditto-lang/actions/setup-ditto@main
+        with:
+          release-version: 0.0.3
+
+      - name: Cache ditto stuff
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.setup-ditto.outputs.cache-dir }}
+          key: ${{ runner.os }}-${{ hashFiles('ditto.toml') }}
+
+      - run: npm install
+      - name: Test on NodeJS
+        run: npm test
+      - name: Test on Web (chromium)
+        run: npm test
+        env:
+          BROWSER: chromium
+
