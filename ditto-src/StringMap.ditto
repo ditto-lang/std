@@ -6,6 +6,7 @@ module StringMap exports (
     get,
     remove,
     insert,
+    from_array,
 )
 
 import Array
@@ -36,6 +37,8 @@ insert = insert_impl
 
 remove = remove_impl
 
+from_array = from_array_impl
+
 foreign empty_impl: StringMap(value)
 
 foreign get_impl: (StringMap(value), String, (value) -> a, a) -> a
@@ -45,3 +48,7 @@ foreign insert_impl: (StringMap(value), String, value) -> StringMap(value)
 foreign remove_impl: (StringMap(value), String) -> StringMap(value)
 
 foreign keys_impl: (StringMap(value)) -> Array(String)
+
+foreign from_array_impl: (Array({ key: String, value: value })) -> StringMap(
+    value,
+)

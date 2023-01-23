@@ -50,5 +50,14 @@ export function keys_impl(sm) {
 
 /**
  * @template T
+ * @param {Array<{ key: string, value: T}>} items
+ * @returns {StringMap<T>}
+ */
+export function from_array_impl(items) {
+  return Object.fromEntries(items.map(({ key, value }) => [key, value]));
+}
+
+/**
+ * @template T
  * @typedef {Readonly<Partial<Record<string, T>>>} StringMap
  */
