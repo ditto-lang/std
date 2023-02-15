@@ -78,6 +78,16 @@ export function foldr_impl(array, initial, reducer) {
 
 /**
  * @template A
+ * @param {readonly A[]} x
+ * @param {readonly A[]} y
+ * @returns {readonly A[]}
+ */
+export function append_impl(x, y) {
+  return [...x, ...y];
+}
+
+/**
+ * @template A
  * @param {readonly A[]} array
  * @param {A} element
  * @returns {readonly A[]}

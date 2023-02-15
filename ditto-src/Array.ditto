@@ -9,6 +9,7 @@ module Array exports (
     foldl,
     foldr,
     sort,
+    append,
     push_start,
     push_end,
     length,
@@ -103,6 +104,8 @@ maybe_to_array = fn (mb: Maybe(a)): Array(a) ->
     | Nothing -> []
     end
 
+append = append_impl
+
 push_start = push_start_impl
 
 push_end = push_end_impl
@@ -126,6 +129,8 @@ foreign sort_impl: (Array(a), (a, a) -> Int) -> Array(a)
 foreign foldl_impl: (Array(a), b, (b, a) -> b) -> b
 
 foreign foldr_impl: (Array(a), b, (a, b) -> b) -> b
+
+foreign append_impl: (Array(a), Array(a)) -> Array(a)
 
 foreign push_start_impl: (Array(a), a) -> Array(a)
 

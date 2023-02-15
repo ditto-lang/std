@@ -136,6 +136,18 @@ tests: Array(Test) = [
             Int.is_eq,
         ),
     ),
+    Test.pure(
+        "Array: append",
+        assert_is_eq(
+            Array.append([1, 2, 3], [4, 5, 6]),
+            [1, 2, 3, 4, 5, 6],
+            Int.is_eq,
+        ),
+    ),
+    Test.pure(
+        "Array: append empty",
+        assert_is_eq(Array.append([], []), [], Int.is_eq),
+    ),
 ]
 
 is_even = fn (x: Int): Bool ->
