@@ -37,8 +37,10 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('ditto.toml') }}
 
       - run: npm install
+
       - name: Test on NodeJS
-        run: npm test
+        run: npm run coverage
+
       - name: Test on Web (chromium)
         run: npm test
         env:
