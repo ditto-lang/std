@@ -46,7 +46,7 @@ tests: Array(Test) = [
                 [
                     { key = "a", value = 0 },
                     { key = "b", value = 1 },
-                    {key = "c", value = 2 },
+                    { key = "c", value = 2 },
                     { key = "c", value = 3 },
                 ],
             )
